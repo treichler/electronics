@@ -28,28 +28,28 @@ into Ford's `2006R-RDS` AM/FM tuner system.
 
 ![Circuit](TY45028AF.png)
 
-Pin | description
---- | -----------
-1   | OSC\_0
-2   |
-3   | SDA
-4   | SCL
-5   | Input 1
-6   | Input 0
-7   | IF counter input AM
-8   | IF counter input FM
-9   | Output 1
-10  | Output 0
-11  | Output 2
-12  | Output 3
-13  | Local oscillator FM
-14  | Local oscillator AM
-15  | VCC
-16  |
-17  | Phase detector output
-18  | GND
-19  | Buffered oscillator output
-20  | OSC\_1
+| Pin | description
+| --- | -----------
+| 1   | OSC\_0
+| 2   |
+| 3   | SDA
+| 4   | SCL
+| 5   | Input 1
+| 6   | Input 0
+| 7   | IF counter input AM
+| 8   | IF counter input FM
+| 9   | Output 1
+| 10  | Output 0
+| 11  | Output 2
+| 12  | Output 3
+| 13  | Local oscillator FM
+| 14  | Local oscillator AM
+| 15  | VCC
+| 16  |
+| 17  | Phase detector output
+| 18  | GND
+| 19  | Buffered oscillator output
+| 20  | OSC\_1
 
 
 # Device access
@@ -57,9 +57,9 @@ Pin | description
 The `TY45028AF` is controlled by commands transfered over I2C-bus
 and it listens to the device address `0x62`.
 
-Bit | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0
-    | - | - | - | - | - | - | - | ---
-    | 1 | 1 | 0 | 0 | 0 | 1 | 0 | R/W
+| Bit | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0
+| --- | - | - | - | - | - | - | - | ---
+|     | 1 | 1 | 0 | 0 | 0 | 1 | 0 | R/W
 
 
 # Register access
@@ -74,42 +74,38 @@ byte.
 
 ## 1-Byte read -- status:
 
-Bit | Function
---- | --------
-7   |
-6   | input 1 <- pin5
-5   | input 0 <- pin6
-4   |
-3   |
-2   |
-1   |
-0   |
-
-> Input is connected to tuner's FM stereo indicator
+| Bit | Function            | Annotation
+| --- | ------------------- | ----------
+| 7   |                     |
+| 6   | input 1 &larr; pin5 | connected to tuner's FM stereo indicator
+| 5   | input 0 &larr; pin6 | connected to tuner's multipath detector
+| 4   |                     |
+| 3   |                     |
+| 2   |                     |
+| 1   |                     |
+| 0   |                     |
 
 
 ## 1-Byte write -- port settings:
 
-Bit | Function
---- | --------
-7   |
-6   |
-5   | mode1
-4   | mode0
-3   | output 3 -> pin12
-2   | output 2 -> pin11
-1   | output 1 -> pin9
-0   | output 0 -> pin10
+| Bit | Function              | Annotation
+| --- | --------------------- | ----------
+| 7   |                       |
+| 6   |                       |
+| 5   | mode1                 |
+| 4   | mode0                 |
+| 3   | output 3 &rarr; pin12 | connected to tuner's AM/FM switch
+| 2   | output 2 &rarr; pin11 | connected to tuner's AM seek mode
+| 1   | output 1 &rarr; pin9  |
+| 0   | output 0 &rarr; pin10 | connected to AM band switch
 
-> Output 0 is connected to tuner's AM/FM switch
-> where 0 is AM and 1 is FM
 
-mode1 | mode0 | Description
------ | ----- | -----------
-0     | 0     | test: f\_osc / N
-0     | 1     |
-1     | 0     |
-1     | 1     |
+| mode1 | mode0 | mode | Annotation
+| ----- | ----- | ---- | ----------
+| 0     | 0     | test | f\_osc / N is forwarded to pin 10
+| 0     | 1     |      |
+| 1     | 0     |      |
+| 1     | 1     |      |
 
 
 ## 2-Bytes write -- divider:
@@ -119,29 +115,29 @@ is accessed.
 
 ### first byte -- MSB
 
-Bit | Function
---- | --------
-7   |
-6   | n\_14
-5   | n\_13
-4   | n\_12
-3   | n\_11
-2   | n\_10
-1   | n\_9
-0   | n\_8
+| Bit | Function
+| --- | --------
+| 7   |
+| 6   | n\_14
+| 5   | n\_13
+| 4   | n\_12
+| 3   | n\_11
+| 2   | n\_10
+| 1   | n\_9
+| 0   | n\_8
 
 ### second byte -- LSB
 
-Bit | Function
---- | --------
-7   | n\_7
-6   | n\_6
-5   | n\_5
-4   | n\_4
-3   | n\_3
-2   | n\_2
-1   | n\_1
-0   | n\_0
+| Bit | Function
+| --- | --------
+| 7   | n\_7
+| 6   | n\_6
+| 5   | n\_5
+| 4   | n\_4
+| 3   | n\_3
+| 2   | n\_2
+| 1   | n\_1
+| 0   | n\_0
 
 
 ## 3-Bytes write -- setup:
@@ -151,40 +147,40 @@ reference divider
 
 ### first byte -- identifier:
 
-Value | Description
------ | ----------
-0x04  | set reference divider for FM
-0x05  | set reference divider for FM
-0x06  | set reference divider for AM
+| Value | Description
+| ----- | ----------
+| 0x04  | set reference divider for FM
+| 0x05  | set reference divider for FM
+| 0x06  | set reference divider for AM
 
 > When value is `0x06` and mode is set to `test` the reference
 > divider's output is forwarded to pin10
 
 ### second byte -- MSB:
 
-Bit | Function
---- | --------
-7   |
-6   |
-5   | n\_13
-4   | n\_12
-3   | n\_11
-2   | n\_10
-1   | n\_9
-0   | n\_8
+| Bit | Function
+| --- | --------
+| 7   |
+| 6   |
+| 5   | n\_13
+| 4   | n\_12
+| 3   | n\_11
+| 2   | n\_10
+| 1   | n\_9
+| 0   | n\_8
 
 ### third byte -- LSB
 
-Bit | Function
---- | --------
-7   | n\_7
-6   | n\_6
-5   | n\_5
-4   | n\_4
-3   | n\_3
-2   | n\_2
-1   | n\_1
-0   | n\_0
+| Bit | Function
+| --- | --------
+| 7   | n\_7
+| 6   | n\_6
+| 5   | n\_5
+| 4   | n\_4
+| 3   | n\_3
+| 2   | n\_2
+| 1   | n\_1
+| 0   | n\_0
 
 
 ------------------------------------------------------------------
@@ -197,21 +193,20 @@ part of the `2006R-RDS` car radio.
 
 ## FM:
 
-Byte 1 | Byte 2 | Byte 3 | Explanation
------- | ------ | ------ | -----------
-0x04   | 0x00   | 0xcf   | 10.35MHz / 207 = 50kHz reference
-0x11   |        |        | mode = 1, FM
-0x08   | 0x94   |        | 2196 --> 10.7MHz + 99.1MHz
-0x07   | 0xf6   |        | 2038 --> 10.7MHz + 91.2MHz
+| Byte 1 | Byte 2 | Byte 3 | Explanation
+| ------ | ------ | ------ | -----------
+| 0x04   | 0x00   | 0xcf   | 10.35MHz / 207 = 50kHz reference
+| 0x11   |        |        | mode = 1, FM
+| 0x08   | 0x94   |        | 2196 &rarr; 10.7MHz + 99.1MHz
+| 0x07   | 0xf6   |        | 2038 &rarr; 10.7MHz + 91.2MHz
 
 
 ## AM:
 
-Byte 1 | Byte 2 | Byte 3 | Explanation
------- | ------ | ------ | -----------
-0x06   | 0x28   | 0x6e   | 10.35MHz / 10350 = 1kHz reference
-0x10   |        |        | mode = 1, AM
-0x2c   | 0xb8   |        | 11448 --> 10.35MHz + 450kHz + 648kHz
-0x2c   | 0x5e   |        | 11358 --> 10.35MHz + 450kHz + 558kHz
-
+| Byte 1 | Byte 2 | Byte 3 | Explanation
+| ------ | ------ | ------ | -----------
+| 0x06   | 0x28   | 0x6e   | 10.35MHz / 10350 = 1kHz reference
+| 0x10   |        |        | mode = 1, AM
+| 0x2c   | 0xb8   |        | 11448 &rarr; 10.35MHz + 450kHz + 648kHz
+| 0x2c   | 0x5e   |        | 11358 &rarr; 10.35MHz + 450kHz + 558kHz
 
